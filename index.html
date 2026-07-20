@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HEHEHHE!</title>
+<style>
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    overflow-x: hidden;
+    font-family: 'Comic Sans MS', 'Trebuchet MS', 'Segoe UI', sans-serif;
+    background: linear-gradient(160deg, #ff9ec4, #ff5da2 35%, #ffb6d5 65%, #ff77b8);
+    background-size: 400% 400%;
+    animation: bgShift 10s ease infinite;
+  }
+
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  #confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .stage {
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .greeting, .letter-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    z-index: 10;
+  }
+
+  .greeting {
+    opacity: 0;
+    pointer-events: none;
+    animation: greetSequence 5.5s ease-in-out forwards;
+    animation-delay: 3s;
+  }
+
+  @keyframes greetSequence {
+    0%   { opacity: 0; }
+    15%  { opacity: 1; }
+    75%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  .sparkle {
+    position: absolute;
+    font-size: 2.2rem;
+    opacity: 0;
+    animation: twinkle 2s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.9; }
+  }
+
+  .balloon {
+    position: absolute;
+    font-size: 4rem;
+    animation: floatUp 6s ease-in-out infinite;
+  }
+  @keyframes floatUp {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-25px); }
+  }
+
+  h1 {
+    font-size: clamp(3rem, 11vw, 7rem);
+    margin: 0;
+    line-height: 1.1;
+    color: #fff;
+    text-shadow: 3px 3px 8px rgba(0,0,0,0.2);
+    letter-spacing: 1px;
+  }
+
+  .subtitle {
+    font-size: clamp(1.2rem, 3.5vw, 2.1rem);
+    color: #fff;
+    font-weight: bold;
+    margin-top: 18px;
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .letter-wrap {
+    opacity: 0;
+    animation: fadeIn 1.8s ease forwards;
+    animation-delay: 8.5s;
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  .message-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 24px;
+    padding: 32px 28px;
+    max-width: 600px;
+    width: 90vw;
+    box-shadow: 0 12px 30px rgba(150, 0, 80, 0.25);
+    border: 3px dashed #ff5da2;
+  }
+
+  .message-card p {
+    font-size: clamp(1.05rem, 3vw, 1.5rem);
+    color: #d6006e;
+    font-weight: bold;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .cake-row {
+    margin-top: 34px;
+    display: flex;
+    gap: 26px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .emoji-btn {
+    font-size: 3.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .emoji-btn:hover {
+    transform: scale(1.15);
+  }
+
+  .footer-note {
+    margin-top: 30px;
+    color: #fff;
+    font-size: 1rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
+
+  @media (max-width: 500px) {
+    .balloon { font-size: 3rem; }
+    .sparkle { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div class="stage">
+
+  <div class="greeting">
+    <div class="sparkle" style="top:8%; left:10%;">✨</div>
+    <div class="sparkle" style="top:15%; right:12%; animation-delay:0.5s;">⭐</div>
+    <div class="sparkle" style="top:75%; left:8%; animation-delay:1s;">✨</div>
+    <div class="sparkle" style="top:70%; right:10%; animation-delay:1.5s;">💫</div>
+
+    <div class="balloon" style="top:5%; left:6%;">🎈</div>
+    <div class="balloon" style="top:10%; right:8%; animation-delay:1s;">🎈</div>
+    <div class="balloon" style="bottom:8%; left:12%; animation-delay:2s;">🎈</div>
+    <div class="balloon" style="bottom:12%; right:6%; animation-delay:0.5s;">🎈</div>
+
+    <h1>HAPPIIBBEERRTHDAY!!</h1>
+    <div class="subtitle">🎉 HAAABAAADUUUUUUU 🎉</div>
+  </div>
+
+  <div class="letter-wrap">
+    <div class="message-card">
+      <p id="messageText"> Nawa ang iyong kaarawan ay puno ng kasiyahan, at kabaitan. Ginawa ko Ito kase why not, coconut. HABADUU SEYOOO, WOW PEACE</p>
+    </div>
+
+    <div class="cake-row">
+      <div class="emoji-btn" onclick="burstConfetti()">🎂</div>
+      <div class="emoji-btn" onclick="burstConfetti()">🥳</div>
+      <div class="emoji-btn" onclick="burstConfetti()">🎁</div>
+      <div class="emoji-btn" onclick="burstConfetti()">🎊</div>
+    </div>
+
+
+  </div>
+
+</div>
+
+<script>
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const colors = ['#ff5da2', '#ffd166', '#06d6a0', '#118ab2', '#ef476f', '#fff', '#ffb703'];
+
+  function makeConfetti(count) {
+    const pieces = [];
+    for (let i = 0; i < count; i++) {
+      pieces.push({
+        x: Math.random() * W,
+        y: -20 - Math.random() * H * 0.5,
+        r: 4 + Math.random() * 6,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speedY: 2 + Math.random() * 4,
+        speedX: (Math.random() - 0.5) * 3,
+        rotation: Math.random() * 360,
+        spin: (Math.random() - 0.5) * 12,
+        shape: Math.random() > 0.5 ? 'rect' : 'circle',
+        life: 1
+      });
+    }
+    return pieces;
+  }
+
+  let confettiPieces = [];
+  let running = false;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    confettiPieces.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      p.rotation += p.spin;
+      if (p.y > H + 20) p.life -= 0.02;
+
+      ctx.save();
+      ctx.globalAlpha = Math.max(p.life, 0);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    });
+
+    confettiPieces = confettiPieces.filter(p => p.life > 0);
+
+    if (confettiPieces.length > 0) {
+      requestAnimationFrame(draw);
+    } else {
+      running = false;
+    }
+  }
+  setTimeout(() => {
+    confettiPieces = confettiPieces.concat(makeConfetti(260));
+    running = true;
+    requestAnimationFrame(draw);
+    setTimeout(() => {
+      confettiPieces.forEach(p => { p.life = Math.min(p.life, 0.6); });
+    }, 4000);
+  }, 3000);
+
+  function burstConfetti() {
+    if (!running) {
+      confettiPieces = confettiPieces.concat(makeConfetti(150));
+      running = true;
+      requestAnimationFrame(draw);
+      setTimeout(() => {
+        confettiPieces.forEach(p => { p.life = Math.min(p.life, 0.6); });
+      }, 2500);
+    } else {
+      confettiPieces = confettiPieces.concat(makeConfetti(150));
+    }
+  }
+</script>
+
+</body>
+</html>
